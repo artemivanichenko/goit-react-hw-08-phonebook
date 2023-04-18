@@ -1,16 +1,8 @@
+import { PhoneBook } from './PhoneBook/PhoneBook';
+
 export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
-  );
+  const getData = data => {
+    console.log(data);
+  };
+  return <PhoneBook getData={getData} />;
 };
