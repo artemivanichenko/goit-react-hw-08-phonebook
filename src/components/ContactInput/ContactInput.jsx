@@ -1,13 +1,7 @@
+import PropTypes from 'prop-types';
 import { StyledInput, StyledTitle } from './ContactInput.styled';
 
-export const ContactInput = ({
-  title,
-  name,
-  value,
-  type,
-  onChange,
-  pattern,
-}) => {
+export const ContactInput = ({ title, name, value, type, onChange }) => {
   return (
     <>
       {title && <StyledTitle>{title}</StyledTitle>}
@@ -22,4 +16,12 @@ export const ContactInput = ({
       />
     </>
   );
+};
+
+ContactInput.propTypes = {
+  title: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
