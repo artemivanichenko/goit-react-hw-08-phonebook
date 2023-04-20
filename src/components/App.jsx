@@ -50,12 +50,13 @@ export class App extends Component {
         contact.name.toLowerCase().includes(normalizedFilter)
       );
     }
-    console.log(contacts);
+    return contacts;
   };
 
   render() {
     const { name, number, filter } = this.state;
     const contacts = this.filterContacts();
+
     return (
       <>
         <Section title="PhoneBook">
