@@ -14,28 +14,30 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  handleChange = e => {
-    const { value, name } = e.target;
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const name = e.target.elements.name.value;
-    const number = e.target.elements.number.value;
+  handleAddContact = ({ name, number }) => {
     const contact = {
       id: nanoid(),
       name,
       number,
     };
-
+    if (
+      this.state.contacts.find(
+        contact => contact.name === name || contact.number === number
+      )
+    ) {
+      alert('This name is already in the contact list');
+      return;
+    }
     this.setState(({ contacts }) => ({
       contacts: [contact, ...contacts],
     }));
+    this.setState({ name: '', number: '' });
+  };
+  handleChange = e => {
+    const { value, name } = e.target;
+    this.setState({ [name]: value });
   };
   handleDelete = id => {
     this.setState(prevState => ({
@@ -54,21 +56,16 @@ export class App extends Component {
   };
 
   render() {
-    const { name, number, filter } = this.state;
+    const { filter } = this.state;
     const contacts = this.filterContacts();
 
     return (
       <>
         <Section title="PhoneBook">
-          <ContactForm
-            name={name}
-            number={number}
-            onChange={this.handleChange}
-            onSubmit={this.handleSubmit}
-          />
+          <ContactForm onSubmit={this.handleAddContact} />
         </Section>
         <Section title="Contacts">
-          <Filter name={name} onChange={this.handleChange} value={filter} />
+          <Filter onChange={this.handleChange} value={filter} />
           <ContactsList contacts={contacts} onClick={this.handleDelete} />
         </Section>
       </>
