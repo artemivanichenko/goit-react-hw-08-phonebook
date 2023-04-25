@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import { StyledInput, StyledTitle } from './ContactInput.styled';
 
 export const ContactInput = ({ title, name, value, type, onChange }) => {
