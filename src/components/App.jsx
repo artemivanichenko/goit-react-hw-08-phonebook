@@ -9,15 +9,8 @@ const KEY = 'contacts';
 export const App = () => {
   const [contacts, setContacts] = useGetLocalContacts(KEY, dataContacts);
   const [filter, setFilter] = useState('');
-  // const { name, number, id } = contacts;
 
   const handleAddContact = (name, number) => {
-    // const contact = {
-    //   id: nanoid(),
-    //   name,
-    //   number,
-    // };
-
     if (
       contacts.find(
         contact => contact.name === name || contact.number === number
@@ -34,7 +27,7 @@ export const App = () => {
   };
 
   const handleFilter = e => {
-    setFilter(e => e.target.value);
+    setFilter(e.target.value);
   };
   const handleDelete = id => {
     setContacts(e => e.filter(contact => contact.id !== id));
@@ -46,7 +39,7 @@ export const App = () => {
         contact.name.toLowerCase().includes(normalizedFilter)
       );
     }
-    // return contacts;
+    return contacts;
   };
 
   const filterContacts = getFilterContacts();

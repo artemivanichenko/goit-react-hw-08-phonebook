@@ -3,17 +3,18 @@ import { ContactInput } from 'components/ContactInput/ContactInput';
 import { StyledBtnForm, StyledForm } from './ContactForm.styled';
 import { useState } from 'react';
 
-export const ContactForm = onSubmit => {
+export const ContactForm = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const handleChange = e => {
     switch (e.target.name) {
       case 'name':
-        setName(e => e.target.value);
+        setName(e.target.value);
         break;
       case 'number':
-        setNumber(e => e.target.value);
+        setNumber(e.target.value);
+
         break;
 
       default:
