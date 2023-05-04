@@ -1,16 +1,25 @@
-import { useState } from 'react';
-import { nanoid } from 'nanoid';
-import { dataContacts } from '../data/contacts';
+// import { useState } from 'react';
+// import { nanoid } from 'nanoid';
+// import { dataContacts } from '../data/contacts';
 import { Section, ContactForm, Filter, ContactsList } from './index';
-import { useGetLocalContacts } from 'Hooks/useGetLocalContacts';
+// import { useGetLocalContacts } from 'Hooks/useGetLocalContacts';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectContacts, selectFilter } from 'Redux/selectors';
+// import { PersistGate } from 'redux-persist/integration/react';
+import { deleteContact, setContacts, setFilter } from 'Redux/ContactSlice';
 
-const KEY = 'contacts';
+// const KEY = 'contacts';
 
 export const App = () => {
-  const [contacts, setContacts] = useGetLocalContacts(KEY, dataContacts);
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useGetLocalContacts(KEY, dataContacts);
+  const contacts = useSelector(selectContacts);
+  const dispatch = useDispatch();
+  // console.log(contacts);
+  const filter = useSelector(selectFilter);
+  // const [filter, setFilter] = useState('');
 
   const handleAddContact = (name, number) => {
+    // const form = e.target;
     if (
       contacts.find(
         contact => contact.name === name || contact.number === number
@@ -20,17 +29,16 @@ export const App = () => {
       return;
     }
 
-    setContacts(contacts => [
-      ...contacts,
-      { id: nanoid(), name: name, number: number },
-    ]);
+    dispatch(setContacts({ name: name, number: number }));
+    // console.log(contacts);
   };
 
   const handleFilter = e => {
-    setFilter(e.target.value);
+    dispatch(setFilter(e.target.value));
   };
   const handleDelete = id => {
-    setContacts(e => e.filter(contact => contact.id !== id));
+    console.log(id);
+    dispatch(deleteContact(id));
   };
   const getFilterContacts = () => {
     if (filter) {
@@ -42,7 +50,7 @@ export const App = () => {
     return contacts;
   };
 
-  const filterContacts = getFilterContacts();
+  // const filterContacts = getFilterContacts();
 
   return (
     <>
@@ -51,7 +59,7 @@ export const App = () => {
       </Section>
       <Section title="Contacts">
         <Filter onChange={handleFilter} value={filter} />
-        <ContactsList contacts={filterContacts} onClick={handleDelete} />
+        <ContactsList contacts={getFilterContacts()} onClick={handleDelete} />
       </Section>
     </>
   );
