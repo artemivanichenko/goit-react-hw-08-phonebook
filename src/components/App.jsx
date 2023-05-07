@@ -1,25 +1,13 @@
-// import { useState } from 'react';
-// import { nanoid } from 'nanoid';
-// import { dataContacts } from '../data/contacts';
 import { Section, ContactForm, Filter, ContactsList } from './index';
-// import { useGetLocalContacts } from 'Hooks/useGetLocalContacts';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts, selectFilter } from 'Redux/selectors';
-// import { PersistGate } from 'redux-persist/integration/react';
-import { deleteContact, setContacts, setFilter } from 'Redux/ContactSlice';
-
-// const KEY = 'contacts';
+import { deleteContact, addContacts, filterContact } from 'Redux/ContactSlice';
 
 export const App = () => {
-  // const [contacts, setContacts] = useGetLocalContacts(KEY, dataContacts);
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
-  // console.log(contacts);
   const filter = useSelector(selectFilter);
-  // const [filter, setFilter] = useState('');
-
   const handleAddContact = (name, number) => {
-    // const form = e.target;
     if (
       contacts.find(
         contact => contact.name === name || contact.number === number
@@ -28,13 +16,11 @@ export const App = () => {
       alert('This name is already in the contact list');
       return;
     }
-
-    dispatch(setContacts({ name: name, number: number }));
-    // console.log(contacts);
+    dispatch(addContacts({ name, number }));
   };
 
   const handleFilter = e => {
-    dispatch(setFilter(e.target.value));
+    dispatch(filterContact(e.target.value));
   };
   const handleDelete = id => {
     console.log(id);
@@ -49,8 +35,6 @@ export const App = () => {
     }
     return contacts;
   };
-
-  // const filterContacts = getFilterContacts();
 
   return (
     <>

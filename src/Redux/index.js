@@ -1,24 +1,5 @@
-// import { createStore } from 'redux';
-
-// const initialState = { count: 1, step: 1 };
-
-// const countReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     default:
-//       return state;
-//   }
-// };
-
-// export const store = createStore(
-//   countReducer,
-//   initialState,
-//   window.devToolsExtension ? window.devToolsExtension() : f => f
-// );
-
 import { configureStore } from '@reduxjs/toolkit';
-
 import { contactsReduce } from './ContactSlice';
-// import { createStore } from 'redux';
 import {
   persistStore,
   persistReducer,
@@ -34,6 +15,7 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage for
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['filter'],
 };
 
 const persistedReducer = persistReducer(persistConfig, contactsReduce);
