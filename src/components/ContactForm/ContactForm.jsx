@@ -14,9 +14,7 @@ export const ContactForm = ({ onSubmit }) => {
         break;
       case 'number':
         setNumber(e.target.value);
-
         break;
-
       default:
         break;
     }
@@ -24,8 +22,8 @@ export const ContactForm = ({ onSubmit }) => {
   const handleSubmit = e => {
     e.preventDefault();
     onSubmit(name, number);
-    setName(name);
-    setNumber(number);
+    setName('');
+    setNumber('');
   };
 
   return (

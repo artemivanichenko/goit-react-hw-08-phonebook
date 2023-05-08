@@ -23,7 +23,6 @@ export const App = () => {
     dispatch(filterContact(e.target.value));
   };
   const handleDelete = id => {
-    console.log(id);
     dispatch(deleteContact(id));
   };
   const getFilterContacts = () => {
