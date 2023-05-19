@@ -2,8 +2,10 @@ import PropTypes from 'prop-types';
 import { ContactInput } from 'components/ContactInput/ContactInput';
 import { StyledBtnForm, StyledForm } from './ContactForm.styled';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export const ContactForm = ({ onSubmit }) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -21,7 +23,7 @@ export const ContactForm = ({ onSubmit }) => {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit(name, number);
+    dispatch(onSubmit(name, number));
     setName('');
     setNumber('');
   };

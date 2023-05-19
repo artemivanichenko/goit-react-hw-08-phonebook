@@ -1,12 +1,25 @@
 import { Section, ContactForm, Filter, ContactsList } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts, selectFilter } from 'Redux/selectors';
-import { deleteContact, addContacts, filterContact } from 'Redux/ContactSlice';
+// import {
+//   addContactsThunk,
+//   deleteContactThunk,
+//   fetchContactsThunk,
+// } from 'Redux/operations';
+import { filterContact } from 'Redux/filterSlice';
+import { useEffect } from 'react';
 
 export const App = () => {
-  const contacts = useSelector(selectContacts);
+  // const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
   const filter = useSelector(selectFilter);
+
+  const { items: contacts, isLoading, error } = useSelector(selectContacts);
+  // console.log(contacts, isLoading, error);
+  useEffect(() => {
+    dispatch(fetchContactsThunk());
+  }, [dispatch]);
+
   const handleAddContact = (name, number) => {
     if (
       contacts.find(
@@ -16,14 +29,14 @@ export const App = () => {
       alert('This name is already in the contact list');
       return;
     }
-    dispatch(addContacts({ name, number }));
+    dispatch(addContactsThunk({ name, number }));
   };
 
   const handleFilter = e => {
     dispatch(filterContact(e.target.value));
   };
   const handleDelete = id => {
-    dispatch(deleteContact(id));
+    dispatch(deleteContactThunk(id));
   };
   const getFilterContacts = () => {
     if (filter) {
