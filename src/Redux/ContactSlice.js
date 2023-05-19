@@ -2,7 +2,7 @@ import {
   addContactThunk,
   fetchContactsThunk,
   deleteContactThunk,
-} from 'Redux/operations';
+} from './operations';
 const { createSlice } = require('@reduxjs/toolkit');
 // const { nanoid } = require('nanoid');
 
@@ -12,7 +12,6 @@ const initialState = {
     isLoading: false,
     error: null,
   },
-  filter: '',
 };
 
 const isLoadingTrue = state => {
@@ -30,11 +29,7 @@ const isRejected = (state, action) => {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {
-    // filterContact(state, { payload }) {
-    //   state.filter = payload;
-    // },
-  },
+
   extraReducers: builder => {
     builder
       .addCase(fetchContactsThunk.fulfilled, (state, action) => {

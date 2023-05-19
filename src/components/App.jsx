@@ -1,21 +1,23 @@
 import { Section, ContactForm, Filter, ContactsList } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts, selectFilter } from 'Redux/selectors';
-// import {
-//   addContactsThunk,
-//   deleteContactThunk,
-//   fetchContactsThunk,
-// } from 'Redux/operations';
-import { filterContact } from 'Redux/filterSlice';
+import {
+  addContactThunk,
+  deleteContactThunk,
+  fetchContactsThunk,
+} from 'Redux/operations';
+// import { filterContact } from 'Redux/filterSlice';
 import { useEffect } from 'react';
 
 export const App = () => {
   // const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
   const filter = useSelector(selectFilter);
+  console.log(filter);
 
   const { items: contacts, isLoading, error } = useSelector(selectContacts);
   // console.log(contacts, isLoading, error);
+
   useEffect(() => {
     dispatch(fetchContactsThunk());
   }, [dispatch]);
@@ -29,18 +31,17 @@ export const App = () => {
       alert('This name is already in the contact list');
       return;
     }
-    dispatch(addContactsThunk({ name, number }));
+    dispatch(addContactThunk({ name, number }));
   };
 
-  const handleFilter = e => {
-    dispatch(filterContact(e.target.value));
-  };
   const handleDelete = id => {
     dispatch(deleteContactThunk(id));
   };
   const getFilterContacts = () => {
     if (filter) {
+      console.log(filter);
       const normalizedFilter = filter.toLowerCase();
+      console.log(normalizedFilter);
       return contacts.filter(contact =>
         contact.name.toLowerCase().includes(normalizedFilter)
       );
@@ -54,8 +55,8 @@ export const App = () => {
         <ContactForm onSubmit={handleAddContact} />
       </Section>
       <Section title="Contacts">
-        <Filter onChange={handleFilter} value={filter} />
-        <ContactsList contacts={getFilterContacts()} onClick={handleDelete} />
+        <Filter value={filter} />
+        {/* <ContactsList contacts={getFilterContacts()} onClick={handleDelete} /> */}
       </Section>
     </>
   );
