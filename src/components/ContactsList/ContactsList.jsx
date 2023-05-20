@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteContactThunk } from 'Redux/operations';
-// import { useSelector } from 'react-redux';
-import { selectContacts } from 'Redux/selectors';
+import { selectError, selectIsLoading } from 'Redux/selectors';
 import {
   StyledBtnDelete,
   StyledContactInfo,
@@ -10,22 +9,29 @@ import {
 } from './ContactsList.styled';
 
 export const ContactsList = ({ contacts }) => {
-  // const { isLoading } = useSelector(selectContacts);
-  console.log(contacts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+
   const dispatch = useDispatch();
   return (
-    <ul>
-      {contacts.map(({ id, name, phone }) => {
-        const handleDelete = () => dispatch(deleteContactThunk(id));
-        return (
-          <StyledItem key={id}>
-            <StyledContactInfo>{name}:</StyledContactInfo>
-            <StyledContactInfo>{phone}</StyledContactInfo>
-            <StyledBtnDelete onClick={handleDelete}>Delete</StyledBtnDelete>
-          </StyledItem>
-        );
-      })}
-    </ul>
+    <>
+      {' '}
+      {isLoading && !error && <p>Loading contacts...</p>}
+      <ul>
+        {contacts.map(({ id, name, phone }) => {
+          const handleDelete = () => dispatch(deleteContactThunk(id));
+          return (
+            <StyledItem key={id}>
+              <StyledContactInfo>{name}:</StyledContactInfo>
+              <StyledContactInfo>{phone}</StyledContactInfo>
+              <StyledBtnDelete onClick={handleDelete} disabled={isLoading}>
+                Delete
+              </StyledBtnDelete>
+            </StyledItem>
+          );
+        })}
+      </ul>
+    </>
   );
 };
 
@@ -34,8 +40,8 @@ ContactsList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
+      phone: PropTypes.string.isRequired,
     })
   ),
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };

@@ -1,17 +1,13 @@
 import PropTypes from 'prop-types';
 import { ContactInput } from 'components/ContactInput/ContactInput';
 import { StyledForm } from './Filter.styled';
-import { useDispatch } from 'react-redux';
-import { filterContact } from 'Redux/filterSlice';
 
-export const Filter = ({ value }) => {
-  const dispatch = useDispatch();
-
+export const Filter = ({ value, onChange }) => {
   return (
     <StyledForm>
       <ContactInput
         value={value}
-        onChange={event => dispatch(filterContact(event.currentTarget.value))}
+        onChange={onChange}
         name="filter"
         title="Find contact by name"
       />
@@ -20,6 +16,6 @@ export const Filter = ({ value }) => {
 };
 
 Filter.propTypes = {
-  // onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
 };

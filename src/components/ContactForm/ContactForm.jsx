@@ -1,32 +1,32 @@
 import PropTypes from 'prop-types';
 import { ContactInput } from 'components/ContactInput/ContactInput';
 import { StyledBtnForm, StyledForm } from './ContactForm.styled';
-// import { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 export const ContactForm = ({ onSubmit }) => {
   const dispatch = useDispatch();
-  // const [name, setName] = useState('');
-  // const [number, setNumber] = useState('');
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  // const handleChange = e => {
-  //   switch (e.target.name) {
-  //     case 'name':
-  //       setName(e.target.value);
-  //       break;
-  //     case 'number':
-  //       setNumber(e.target.value);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
+  const handleChange = e => {
+    switch (e.target.name) {
+      case 'name':
+        setName(e.target.value);
+        break;
+      case 'number':
+        setNumber(e.target.value);
+        break;
+      default:
+        break;
+    }
+  };
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(onSubmit());
-    // setName('');
-    // setNumber('');
-    e.target.reset();
+    dispatch(onSubmit({ name, phone: number }));
+    setName('');
+    setNumber('');
+    // e.target.reset();
   };
 
   return (
@@ -35,18 +35,18 @@ export const ContactForm = ({ onSubmit }) => {
         <ContactInput
           type="text"
           name="name"
-          // value={name}
+          value={name}
           title="Name"
-          // onChange={handleChange}
+          onChange={handleChange}
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         />
         <br />
         <ContactInput
           type="number"
           name="number"
-          // value={number}
+          value={number}
           title="Number"
-          // onChange={handleChange}
+          onChange={handleChange}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         />
         <br />

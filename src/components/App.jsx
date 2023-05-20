@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts, selectFilter } from 'Redux/selectors';
 import { addContactThunk, fetchContactsThunk } from 'Redux/operations';
 import { useEffect } from 'react';
+import { filterContact } from 'Redux/ContactSlice';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -13,20 +14,18 @@ export const App = () => {
   useEffect(() => {
     dispatch(fetchContactsThunk());
   }, [dispatch]);
-
-  const handleAddContact = (name, number) => {
-    console.log(name);
-    console.log(number);
-
+  const filterChange = e => {
+    console.log(e.target.value);
+    dispatch(filterContact(e.target.value));
+  };
+  const handleAddContact = ({ name, phone }) => {
     if (
-      contacts.find(
-        contact => contact.name === name || contact.number === number
-      )
+      contacts.find(contact => contact.name === name || contact.phone === phone)
     ) {
       alert('This name is already in the contact list');
       return;
     }
-    dispatch(addContactThunk({ name, number }));
+    dispatch(addContactThunk({ name, phone }));
   };
 
   const getFilterContacts = () => {
@@ -48,7 +47,7 @@ export const App = () => {
         <ContactForm onSubmit={handleAddContact} />
       </Section>
       <Section title="Contacts">
-        <Filter value={filter} />
+        <Filter value={filter} onChange={filterChange} />
         <ContactsList contacts={getFilterContacts()} />
       </Section>
     </>

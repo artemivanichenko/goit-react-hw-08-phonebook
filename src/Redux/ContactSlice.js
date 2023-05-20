@@ -4,29 +4,35 @@ import {
   deleteContactThunk,
 } from './operations';
 const { createSlice } = require('@reduxjs/toolkit');
-// const { nanoid } = require('nanoid');
 
 const initialState = {
   contacts: [],
   isLoading: false,
   error: null,
+  filter: '',
 };
 
 const isLoadingTrue = state => {
-  state.contacts.isLoading = true;
+  state.isLoading = true;
 };
 const isLoadingFalse = state => {
-  state.contacts.isLoading = false;
+  state.isLoading = false;
 };
 
 const isRejected = (state, action) => {
-  state.contacts.isLoading = false;
-  state.contacts.error = action.payload;
+  state.isLoading = false;
+  state.error = action.payload;
 };
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
+  reducers: {
+    filterContact: (state, action) => {
+      console.log(action.payload);
+      state.filter = action.payload;
+    },
+  },
 
   extraReducers: builder => {
     builder
@@ -35,6 +41,7 @@ const contactsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(addContactThunk.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.contacts.push(action.payload);
         state.isLoading = false;
       })
@@ -51,33 +58,5 @@ const contactsSlice = createSlice({
   },
 });
 
-// const contactsSlice = createSlice({
-//   name: 'contacts',
-//   initialState,
-//   reducers: {
-//     addContacts: {
-//       reducer(state, { payload }) {
-//         state.contacts.push(payload);
-//       },
-//       prepare(payload) {
-//         return {
-//           payload: { name: payload.name, number: payload.number, id: nanoid() },
-//         };
-//       },
-//     },
-//     deleteContact: {
-//       reducer(state, { payload }) {
-//         const index = state.contacts.findIndex(
-//           contact => contact.id === payload
-//         );
-//         state.contacts.splice(index, 1);
-//       },
-//     },
-//     filterContact(state, { payload }) {
-//       state.filter = payload;
-//     },
-//   },
-// });
-
-// export const { filterContact } = contactsSlice.actions;
+export const { filterContact } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;
