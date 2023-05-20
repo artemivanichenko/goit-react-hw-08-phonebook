@@ -7,11 +7,9 @@ const { createSlice } = require('@reduxjs/toolkit');
 // const { nanoid } = require('nanoid');
 
 const initialState = {
-  contacts: {
-    items: [],
-    isLoading: false,
-    error: null,
-  },
+  contacts: [],
+  isLoading: false,
+  error: null,
 };
 
 const isLoadingTrue = state => {
@@ -33,19 +31,19 @@ const contactsSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchContactsThunk.fulfilled, (state, action) => {
-        state.contacts.items = action.payload;
+        state.contacts = action.payload;
         state.isLoading = false;
       })
       .addCase(addContactThunk.fulfilled, (state, action) => {
-        state.contacts.items.push(action.payload);
+        state.contacts.push(action.payload);
         state.isLoading = false;
       })
       .addCase(deleteContactThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        const index = state.contacts.items.findIndex(
+        const index = state.contacts.findIndex(
           contact => contact.id === action.payload.id
         );
-        state.contacts.items.splice(index, 1);
+        state.contacts.splice(index, 1);
       })
       .addMatcher(action => action.type.endsWith('/fulfilled'), isLoadingFalse)
       .addMatcher(action => action.type.endsWith('/pending'), isLoadingTrue)

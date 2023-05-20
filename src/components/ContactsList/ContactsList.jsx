@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { deleteContactThunk } from 'Redux/operations';
+// import { useSelector } from 'react-redux';
 import { selectContacts } from 'Redux/selectors';
 import {
   StyledBtnDelete,
@@ -7,18 +9,19 @@ import {
   StyledItem,
 } from './ContactsList.styled';
 
-export const ContactsList = ({ contacts, onClick }) => {
-  const { isLoading } = useSelector(selectContacts);
+export const ContactsList = ({ contacts }) => {
+  // const { isLoading } = useSelector(selectContacts);
+  console.log(contacts);
+  const dispatch = useDispatch();
   return (
     <ul>
-      {contacts.map(({ id, name, number }) => {
+      {contacts.map(({ id, name, phone }) => {
+        const handleDelete = () => dispatch(deleteContactThunk(id));
         return (
           <StyledItem key={id}>
             <StyledContactInfo>{name}:</StyledContactInfo>
-            <StyledContactInfo>{number}</StyledContactInfo>
-            <StyledBtnDelete onClick={() => onClick(id)} disabled={isLoading}>
-              Delete
-            </StyledBtnDelete>
+            <StyledContactInfo>{phone}</StyledContactInfo>
+            <StyledBtnDelete onClick={handleDelete}>Delete</StyledBtnDelete>
           </StyledItem>
         );
       })}
