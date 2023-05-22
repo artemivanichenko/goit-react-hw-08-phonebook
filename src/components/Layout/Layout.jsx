@@ -1,5 +1,3 @@
-// import { NavBar } from 'components/NavBar/NavBar';
-// import { UserMenu } from 'components/UserMenu/UserMenu';
 import { NavBar } from 'components/NavBar/NavBar';
 import { UserMenu } from 'components/UserMenu/UserMenu';
 import { Outlet } from 'react-router-dom';

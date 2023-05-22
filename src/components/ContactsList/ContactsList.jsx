@@ -18,12 +18,12 @@ export const ContactsList = ({ contacts }) => {
       {' '}
       {isLoading && !error && <p>Loading contacts...</p>}
       <ul>
-        {contacts.map(({ id, name, phone }) => {
+        {contacts.map(({ id, name, number }) => {
           const handleDelete = () => dispatch(deleteContactThunk(id));
           return (
             <StyledItem key={id}>
               <StyledContactInfo>{name}:</StyledContactInfo>
-              <StyledContactInfo>{phone}</StyledContactInfo>
+              <StyledContactInfo>{number}</StyledContactInfo>
               <StyledBtnDelete onClick={handleDelete} disabled={isLoading}>
                 Delete
               </StyledBtnDelete>
@@ -40,7 +40,7 @@ ContactsList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      phone: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
     })
   ),
   onClick: PropTypes.func,

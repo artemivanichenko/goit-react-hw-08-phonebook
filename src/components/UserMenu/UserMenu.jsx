@@ -16,9 +16,9 @@ export const UserMenu = () => {
   return isUserOnline ? (
     <StyledDiv>
       <p>{email}</p>
-      {/* <Button variant="contained" onClick={handleLogOut}>
+      <button variant="contained" onClick={handleLogOut}>
         Logout
-      </Button> */}
+      </button>
     </StyledDiv>
   ) : (
     <StyledDiv>

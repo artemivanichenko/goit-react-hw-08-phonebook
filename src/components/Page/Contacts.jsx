@@ -1,20 +1,14 @@
 import { useEffect } from 'react';
 import { ContactForm, ContactsList, Filter, Section } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectContacts,
-  selectFilter,
-  //   selectIsRefreshing,
-} from 'Redux/selectors';
+import { selectContacts, selectFilter } from 'Redux/selectors';
 import { filterContact } from 'Redux/ContactSlice';
 import { addContactThunk, fetchContactsThunk } from 'Redux/operations';
 
 export const ContactsPage = () => {
-  //   const { items: contacts } = useSelector(selectContacts);
   const dispatch = useDispatch();
   const filter = useSelector(selectFilter);
   const contacts = useSelector(selectContacts);
-  //   const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
     dispatch(fetchContactsThunk());

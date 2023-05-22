@@ -12,7 +12,6 @@ export const LoginPage = () => {
     e.preventDefault();
     const email = e.target.elements.email.value;
     const password = e.target.elements.password.value;
-    // console.log(email, password);
     dispatch(loginThunk({ email, password }));
   };
 
@@ -33,10 +32,19 @@ export const LoginPage = () => {
         />
       ) : (
         <>
-          {' '}
           <StyledForm $center onSubmit={handleSubmit}>
-            {' '}
             <h1>Login form</h1>
+
+            <label>
+              Email
+              <input type="email" name="email" />
+            </label>
+            <label>
+              Password
+              <input type="password" name="password" />
+            </label>
+            <button type="submit">Log In</button>
+
             {/* <TextField
               id="filled-basic"
               label="E-mail"
