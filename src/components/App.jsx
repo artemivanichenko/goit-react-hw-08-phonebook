@@ -4,13 +4,13 @@ import { selectIsRefreshing } from 'Redux/selectors';
 import { useEffect } from 'react';
 import { Oval } from 'react-loader-spinner';
 import { Layout } from './Layout/Layout';
-import { HomePage } from './Page/Home';
-import { RegisterPage } from './Page/Register';
-import { LoginPage } from './Page/Login';
+import { HomePage } from '../Page/Home';
+import { RegisterPage } from '../Page/Register';
+import { LoginPage } from '../Page/Login';
 import { PublicRoute } from './HOC/PublicRoute';
-import { ContactsPage } from './Page/Contacts';
+import { ContactsPage } from '../Page/Contacts';
 import { PrivateRoute } from './HOC/PrivateRoute';
-import { NotFoundPage } from './Page/NotFound';
+import { NotFoundPage } from '../Page/NotFound';
 import { refreshThunk } from 'Redux/Auth/AuthOperations';
 
 export const App = () => {
